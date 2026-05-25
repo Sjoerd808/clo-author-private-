@@ -29,6 +29,30 @@ Claude reads the config, plans the approach, you approve, it runs. Works in the 
 
 ---
 
+## Copilot CLI Setup
+
+This scaffold can also run with Copilot CLI.
+
+```bash
+# Install GitHub CLI + Copilot extension
+gh auth login
+gh extension install github/gh-copilot || gh extension upgrade gh-copilot
+
+# From repo root
+cd /tmp/workspace/Sjoerd808/clo-author-private-
+```
+
+Copilot-specific instructions live in `.github/copilot-instructions.md`.
+
+### Hooks and orchestration with Copilot
+
+- Reuse existing guard scripts in `.claude/hooks/`
+- Use `make copilot-pre-edit` before risky edits
+- Use `make copilot-post-edit` after edits
+- Follow the same phase flow: discovery -> strategy -> execution -> review -> submission
+
+---
+
 ## Setup
 
 1. Fill in `CLAUDE.md` — replace `[BRACKETED PLACEHOLDERS]` with your project details
@@ -103,15 +127,23 @@ Additional modes:
 One command generates a self-contained HTML dashboard of your entire project — sections, data, scripts, quality scores, review history. No server, no dependencies. Double-click to open.
 
 ```bash
+make dashboard
+# or
 python3 scripts/generate_dashboard.py
 ```
 
 Detail reports drill down into individual components:
 
 ```bash
+make report-peer-review
+make report-code-audit
+make report-strategy-review
+make report-quality-gate
+make report-literature
+# or
 python3 scripts/generate_html_report.py peer-review [files...]
 python3 scripts/generate_html_report.py code-audit [files...]
-python3 scripts/generate_html_report.py strategy [files...]
+python3 scripts/generate_html_report.py strategy-review [files...]
 python3 scripts/generate_html_report.py quality-gate [files...]
 python3 scripts/generate_html_report.py literature [files...]
 ```
