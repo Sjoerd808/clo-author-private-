@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>clo-author Skills Demo</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0b1220;
+      --panel: #131c2e;
+      --text: #e8eefc;
+      --muted: #9eb0d6;
+      --accent: #7aa2ff;
+      --ok: #38d39f;
+      --warn: #ffd166;
+      --border: #2a3a5e;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: linear-gradient(180deg, #0a1020, #0b1220 30%, #0d1628 100%);
+      color: var(--text);
+      line-height: 1.55;
+    }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 28px 20px 60px; }
+    h1, h2, h3 { line-height: 1.2; margin: 0 0 12px; }
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.35rem; margin-top: 28px; }
+    p { margin: 8px 0 14px; color: var(--muted); }
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px;
+      margin-top: 14px;
+    }
+    .grid { display: grid; gap: 14px; }
+    @media (min-width: 860px) { .grid.two { grid-template-columns: 1fr 1fr; } }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: rgba(255,255,255,0.01);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    th, td { border-bottom: 1px solid var(--border); padding: 10px 12px; text-align: left; vertical-align: top; }
+    th { color: #cfe0ff; font-weight: 600; background: rgba(122,162,255,0.08); }
+    tr:last-child td { border-bottom: none; }
+    code {
+      background: rgba(122,162,255,0.16);
+      color: #d9e4ff;
+      padding: 0.15rem 0.38rem;
+      border-radius: 6px;
+      border: 1px solid rgba(122,162,255,0.35);
+      font-size: 0.93em;
+    }
+    pre {
+      margin: 10px 0 0;
+      padding: 14px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: #0a1222;
+      overflow: auto;
+      font-size: 0.92rem;
+    }
+    .badge {
+      display: inline-block;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(56,211,159,0.14);
+      color: var(--ok);
+      padding: 4px 10px;
+      font-size: 0.8rem;
+      margin-bottom: 8px;
+    }
+    .steps li { margin-bottom: 8px; color: var(--muted); }
+    .note { color: var(--warn); }
+    a { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <span class="badge">Repository Demo</span>
+    <h1>clo-author: Skill Usage Demo</h1>
+    <p>This page demonstrates how to use the skills provided by this repository, both inside a research workflow and as an external skill provider for another local repository.</p>
+
+    <section class="card">
+      <h2>1) Core skill commands</h2>
+      <table>
+        <thead>
+          <tr><th>Skill</th><th>Use case</th><th>Example</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>/discover</code></td><td>Find literature/data and shape project scope.</td><td><code>/discover --lit --data "minimum wage and youth employment"</code></td></tr>
+          <tr><td><code>/strategize</code></td><td>Design identification strategy and pre-analysis plan.</td><td><code>/strategize --design did --outcome employment</code></td></tr>
+          <tr><td><code>/analyze</code></td><td>Implement analysis in R/Python/Julia.</td><td><code>/analyze --lang python --task event-study</code></td></tr>
+          <tr><td><code>/write</code></td><td>Draft paper sections from analysis outputs.</td><td><code>/write --section results</code></td></tr>
+          <tr><td><code>/review</code></td><td>Run critical review (paper/code/peer).</td><td><code>/review --peer qje</code></td></tr>
+          <tr><td><code>/submit</code></td><td>Prepare final submission and replication package.</td><td><code>/submit --journal aej-applied</code></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="grid two">
+      <article class="card">
+        <h2>2) Generate HTML outputs</h2>
+        <p>Produce project-level and component-level HTML reports.</p>
+        <pre><code># Project dashboard
+make dashboard
+
+# Detail reports
+make report-peer-review FILES="quality_reports/reviews/peer_round1.md quality_reports/reviews/peer_round2.md quality_reports/reviews/peer_round3.md"
+make report-code-audit FILE=quality_reports/reviews/code_audit.md
+make report-strategy-review FILE=quality_reports/reviews/strategy_review.md
+make report-quality-gate FILE=quality_reports/reviews/quality_gate_summary.md
+make report-literature FILE=quality_reports/reviews/annotated_bibliography.md</code></pre>
+      </article>
+
+      <article class="card">
+        <h2>3) External provider mode</h2>
+        <p>Call this repository from another local project.</p>
+        <pre><code># One capability
+make skill-partial TARGET_REPO=/absolute/path/to/consumer-repo CAPABILITY=dashboard
+
+# One bundle
+make skill-bundle TARGET_REPO=/absolute/path/to/consumer-repo BUNDLE=execution \
+  CONTRACT=/absolute/path/to/consumer-repo/provider-contract.json
+
+# Full pipeline
+make skill-full TARGET_REPO=/absolute/path/to/consumer-repo \
+  CONTRACT=/absolute/path/to/consumer-repo/provider-contract.json</code></pre>
+      </article>
+    </section>
+
+    <section class="card">
+      <h2>4) End-to-end demonstration flow</h2>
+      <ol class="steps">
+        <li>Run <code>/discover</code> to gather literature and candidate data.</li>
+        <li>Run <code>/strategize</code> to lock in empirical design and assumptions.</li>
+        <li>Run <code>/analyze</code> to execute scripts and produce tables/figures.</li>
+        <li>Run <code>/write</code> to draft sections linked to generated evidence.</li>
+        <li>Run <code>/review</code> for code/paper/peer stress-testing.</li>
+        <li>Run <code>make dashboard</code> to produce a self-contained HTML project dashboard.</li>
+      </ol>
+      <p class="note">Outputs are written under <code>quality_reports/</code> and can be opened directly via <code>file://</code>.</p>
+    </section>
+
+    <section class="card">
+      <h2>5) Validation before use</h2>
+      <pre><code>make validate</code></pre>
+      <p>This confirms dashboard/report/provider scripts are callable and ready before a run.</p>
+    </section>
+  </main>
+</body>
+</html>

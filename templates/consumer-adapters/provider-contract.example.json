@@ -1,0 +1,14 @@
+{
+  "schema_version": "1",
+  "inputs": {
+    "literature": "quality_reports/demo/annotated_bibliography.md",
+    "strategy-review": "quality_reports/demo/strategy_review.md",
+    "code-audit": "quality_reports/demo/code_audit.md",
+    "quality-gate": "quality_reports/demo/quality_gate_summary.md",
+    "peer-review": [
+      "quality_reports/demo/domain_referee_report.md",
+      "quality_reports/demo/methods_referee_report.md",
+      "quality_reports/demo/editor_decision.md"
+    ]
+  }
+}
