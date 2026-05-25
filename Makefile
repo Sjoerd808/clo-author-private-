@@ -9,7 +9,7 @@ OUT ?=
 FILE ?=
 FILES ?=
 
-.PHONY: validate dashboard report-peer-review report-code-audit report-strategy-review report-quality-gate report-literature copilot-pre-edit copilot-post-edit skill-partial skill-bundle skill-full skill-health
+.PHONY: validate dashboard report-peer-review report-code-audit report-strategy-review report-quality-gate report-literature copilot-pre-edit copilot-post-edit codex-pre-edit codex-post-edit skill-partial skill-bundle skill-full skill-health
 
 validate:
 	$(PYTHON) scripts/generate_dashboard.py --help
@@ -45,6 +45,10 @@ copilot-pre-edit:
 
 copilot-post-edit:
 	@bash .claude/hooks/post-edit-lint.sh
+
+codex-pre-edit: copilot-pre-edit
+
+codex-post-edit: copilot-post-edit
 
 skill-partial:
 	@test -n "$(TARGET_REPO)" || (echo "Set TARGET_REPO=/absolute/path/to/consumer-repo" && exit 1)
