@@ -51,6 +51,23 @@ Copilot-specific instructions live in `.github/copilot-instructions.md`.
 - Use `make copilot-post-edit` after edits
 - Follow the same phase flow: discovery -> strategy -> execution -> review -> submission
 
+### Reuse as external skill provider
+
+You can call this repository from other local repositories as an external provider with stable invocation modes.
+
+```bash
+# One capability
+make skill-partial TARGET_REPO=/absolute/path/to/consumer-repo CAPABILITY=dashboard
+
+# One bundle
+make skill-bundle TARGET_REPO=/absolute/path/to/consumer-repo BUNDLE=execution CONTRACT=/absolute/path/to/consumer-repo/provider-contract.json
+
+# Full run
+make skill-full TARGET_REPO=/absolute/path/to/consumer-repo CONTRACT=/absolute/path/to/consumer-repo/provider-contract.json
+```
+
+See `SKILL_PROVIDER.md` and `templates/consumer-adapters/` for adapter files and compatibility checklist.
+
 ---
 
 ## Setup
@@ -141,11 +158,11 @@ make report-strategy-review
 make report-quality-gate
 make report-literature
 # or
-python3 scripts/generate_html_report.py peer-review [files...]
-python3 scripts/generate_html_report.py code-audit [files...]
-python3 scripts/generate_html_report.py strategy-review [files...]
-python3 scripts/generate_html_report.py quality-gate [files...]
-python3 scripts/generate_html_report.py literature [files...]
+python3 scripts/generate_html_report.py peer-review [file1.md file2.md file3.md]
+python3 scripts/generate_html_report.py code-audit [file.md]
+python3 scripts/generate_html_report.py strategy-review [file.md]
+python3 scripts/generate_html_report.py quality-gate [file.md]
+python3 scripts/generate_html_report.py literature [file.md]
 ```
 
 Self-contained HTML with dark mode, collapsible sections, and print support. Works on `file://`.

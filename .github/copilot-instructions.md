@@ -40,6 +40,14 @@ This repository was originally designed for Claude Code. Use these rules to run 
 - Use `make copilot-pre-edit` before risky edits and `make copilot-post-edit` after edits.
 - Keep orchestration explicit in task updates: discovery -> strategy -> execution -> review -> submission.
 
+## External skill provider mode
+
+- For cross-repo invocation, use `scripts/skill_provider.py` via Make targets:
+  - `make skill-partial TARGET_REPO=/abs/path CAPABILITY=dashboard`
+  - `make skill-bundle TARGET_REPO=/abs/path BUNDLE=execution CONTRACT=/abs/path/provider-contract.json`
+  - `make skill-full TARGET_REPO=/abs/path CONTRACT=/abs/path/provider-contract.json`
+- Read `SKILL_PROVIDER.md` for the full contract and version-pinning workflow.
+
 ## Safety
 
 - Never commit secrets.
